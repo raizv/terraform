@@ -9,7 +9,8 @@ locals {
     "roles/logging.logWriter",
     "roles/monitoring.metricWriter",
     "roles/monitoring.viewer",
-    "roles/stackdriver.resourceMetadata.writer"
+    "roles/stackdriver.resourceMetadata.writer",
+    "roles/cloudtrace.agent"
   ])
 }
 
@@ -20,6 +21,3 @@ resource "google_project_iam_member" "sa_roles" {
   role    = each.value
   member  = "serviceAccount:${google_service_account.sa.email}"
 }
-
-# Cloud Trace Agent
-# "roles/cloudtrace.agent"

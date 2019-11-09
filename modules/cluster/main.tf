@@ -92,6 +92,10 @@ resource "google_container_cluster" "cluster" {
     enabled = true
   }
 
+  # workload_identity_config {
+  #   identity_namespace = "${var.project}.svc.id.goog"
+  # }
+
   # Restrict access to the master
   # master_authorized_networks_config {
   #   cidr_blocks {
@@ -150,10 +154,27 @@ resource "google_container_node_pool" "pool" {
     # Service account to be used by Node VMs. If not specified, "default" service account is used
     service_account = var.service_account
 
+    # gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:development-bb649fa0.svc.id.goog[greetings/default]" development-gke@development-bb649fa0.iam.gserviceaccount.com
+    # kubectl annotate serviceaccount --namespace greetings default iam.gke.io/gcp-service-account=development-gke@development-bb649fa0.iam.gserviceaccount.com
+    # workload_metadata_config {
+    #   node_metadata = "GKE_METADATA_SERVER"
+    # }
+
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/cloud-platform",
+    ]
     # labels = {
     #   label_key = "label_value"
     # }
 
     # tags = ["http-server", "https-server"]
   }
+}
+
+# Setup kube system components - RBAC, PSP and etc
+resource "null_resource" "setup_kube_system" {
+  provisioner "local-exec" {
+    command = "${path.module}/setup.sh ${google_container_cluster.cluster.name} ${var.project} ${var.location}"
+  }
+  depends_on = ["google_container_cluster.cluster"]
 }
