@@ -10,7 +10,8 @@ locals {
     "roles/monitoring.metricWriter",
     "roles/monitoring.viewer",
     "roles/stackdriver.resourceMetadata.writer",
-    "roles/cloudtrace.agent"
+    "roles/cloudtrace.agent",
+    "roles/iam.workloadIdentityUser"
   ])
 }
 
