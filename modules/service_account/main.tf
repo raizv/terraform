@@ -11,7 +11,8 @@ locals {
     "roles/monitoring.viewer",
     "roles/stackdriver.resourceMetadata.writer",
     "roles/cloudtrace.agent",
-    "roles/iam.workloadIdentityUser"
+    "roles/iam.workloadIdentityUser",
+    "roles/storage.objectViewer"
   ])
 }
 

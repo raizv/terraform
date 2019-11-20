@@ -11,3 +11,6 @@ gcloud container clusters get-credentials ${CLUSTER_NAME} --project ${PROJECT} -
 
 echo "Applying Pod Security Policies"
 kubectl apply -f ./kube/psp
+
+echo "Applying RBAC"
+kubectl apply -f ./kube/rbac

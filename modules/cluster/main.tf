@@ -47,7 +47,7 @@ resource "google_container_cluster" "cluster" {
     provider = "CALICO"
   }
 
-  logging_service = "logging.googleapis.com/kubernetes"
+  logging_service    = "logging.googleapis.com/kubernetes"
   monitoring_service = "monitoring.googleapis.com/kubernetes"
 
   addons_config {
@@ -63,8 +63,11 @@ resource "google_container_cluster" "cluster" {
     network_policy_config {
       disabled = false
     }
-    # istio_config {} ?
-    # cloudrun_config {} ?
+    # enable istio
+    # istio_config {
+    #   disabled = false
+    #   auth     = "AUTH_NONE" # or AUTH_MUTUAL_TLS
+    # }
   }
 
   maintenance_policy {
@@ -92,9 +95,9 @@ resource "google_container_cluster" "cluster" {
     enabled = true
   }
 
-  # workload_identity_config {
-  #   identity_namespace = "${var.project}.svc.id.goog"
-  # }
+  workload_identity_config {
+    identity_namespace = "${var.project}.svc.id.goog"
+  }
 
   # Restrict access to the master
   # master_authorized_networks_config {
@@ -149,16 +152,16 @@ resource "google_container_node_pool" "pool" {
     machine_type = var.machine_type
 
     disk_size_gb = 100
-    disk_type = "pd-standard" # or 'pd-ssd'
+    disk_type    = "pd-standard" # or 'pd-ssd'
 
     # Service account to be used by Node VMs. If not specified, "default" service account is used
     service_account = var.service_account
 
     # gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:development-bb649fa0.svc.id.goog[greetings/default]" development-gke@development-bb649fa0.iam.gserviceaccount.com
     # kubectl annotate serviceaccount --namespace greetings default iam.gke.io/gcp-service-account=development-gke@development-bb649fa0.iam.gserviceaccount.com
-    # workload_metadata_config {
-    #   node_metadata = "GKE_METADATA_SERVER"
-    # }
+    workload_metadata_config {
+      node_metadata = "GKE_METADATA_SERVER"
+    }
 
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform",
