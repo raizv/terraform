@@ -54,7 +54,7 @@ module "us_west1_network" {
   source = "../modules/network"
 
   project = google_project.project.project_id
-  network = google_compute_network.project_vpc.self_link
+  network = google_compute_network.vpc.self_link
   region  = "us-west1"
 
   ip_cidr_range         = "10.1.0.0/16"
