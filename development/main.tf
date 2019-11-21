@@ -42,24 +42,25 @@ module "project_services" {
   disable_dependent_services  = false
 }
 
-# Network configuration
+# Create VPC
 resource "google_compute_network" "vpc" {
   name                    = "vpc"
   project                 = google_project.project.project_id
   auto_create_subnetworks = "false"
 }
 
-# module "us_west1_network" {
-#   source = "./modules/network"
+# Create Subnets, Router and NAT
+module "us_west1_network" {
+  source = "../modules/network"
 
-#   project = google_project.project.project_id
-#   network = google_compute_network.project_vpc.self_link
-#   region  = "us-west1"
+  project = google_project.project.project_id
+  network = google_compute_network.project_vpc.self_link
+  region  = "us-west1"
 
-#   ip_cidr_range         = "10.1.0.0/16"
-#   pod_ip_cidr_range     = "10.101.0.0/16"
-#   service_ip_cidr_range = "10.201.0.0/16"
-# }
+  ip_cidr_range         = "10.1.0.0/16"
+  pod_ip_cidr_range     = "10.101.0.0/16"
+  service_ip_cidr_range = "10.201.0.0/16"
+}
 
 # Cluster configuration
 # module "us_west1_cluster" {
