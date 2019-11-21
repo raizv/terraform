@@ -2,9 +2,11 @@
 resource "google_project" "project" {
   name            = "development"
   project_id      = "development-${random_id.id.hex}"
+  org_id          = google_organization.organization.id
   billing_account = data.google_billing_account.account.id
 }
 
+# Activate project APIs
 module "project_services" {
   source  = "terraform-google-modules/project-factory/google//modules/project_services"
   version = "3.3.0"
