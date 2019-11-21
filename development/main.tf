@@ -3,8 +3,7 @@ resource "random_id" "id" {
 }
 
 data "google_organization" "org" {
-  provider = "google-beta"
-  domain   = var.organization_domain
+  domain = var.org_domain
 }
 
 data "google_billing_account" "account" {
@@ -14,9 +13,12 @@ data "google_billing_account" "account" {
 
 # Project configuration
 resource "google_project" "project" {
-  name            = "development"
-  project_id      = "development-${random_id.id.hex}"
-  org_id          = data.google_organization.org.id
+  name       = "development"
+  project_id = "development-${random_id.id.hex}"
+  org_id     = var.org_id
+  # org_id is hardcoded because data.google_organization.org.id 
+  # returns "name" attribute instead of "id"
+  # org_id     = data.google_organization.org.id
   billing_account = data.google_billing_account.account.id
 }
 
