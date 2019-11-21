@@ -17,15 +17,3 @@ variable "router_name" {
 variable "nat_name" {
   default = "nat"
 }
-
-variable "deploy_router" {
-  description = "Deploy GCP Router"
-  default     = true
-  type        = bool
-}
-
-variable "deploy_nat" {
-  description = "Deploy GCP NAT"
-  default     = true
-  type        = bool
-}
