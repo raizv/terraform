@@ -1,8 +1,22 @@
+resource "random_id" "id" {
+  byte_length = 4
+}
+
+data "google_organization" "org" {
+  provider = "google-beta"
+  domain   = var.organization_domain
+}
+
+data "google_billing_account" "account" {
+  display_name = "My Billing Account"
+  open         = true
+}
+
 # Project configuration
 resource "google_project" "project" {
   name            = "development"
   project_id      = "development-${random_id.id.hex}"
-  org_id          = data.google_organization.organization.id
+  org_id          = data.google_organization.org.id
   billing_account = data.google_billing_account.account.id
 }
 
