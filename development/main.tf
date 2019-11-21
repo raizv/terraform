@@ -2,7 +2,7 @@
 resource "google_project" "project" {
   name            = "development"
   project_id      = "development-${random_id.id.hex}"
-  org_id          = google_organization.organization.id
+  org_id          = data.google_organization.organization.id
   billing_account = data.google_billing_account.account.id
 }
 
