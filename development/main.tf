@@ -60,6 +60,9 @@ module "us_west1_network" {
   ip_cidr_range         = "10.1.0.0/16"
   pod_ip_cidr_range     = "10.101.0.0/16"
   service_ip_cidr_range = "10.201.0.0/16"
+
+  deploy_router = true
+  deploy_nat    = true
 }
 
 # Create service account to use with GKE cluster

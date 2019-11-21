@@ -18,6 +18,8 @@ resource "google_compute_subnetwork" "subnetwork" {
 }
 
 resource "google_compute_router" "router" {
+  count = var.deploy_router ? 1 : 0
+
   name    = var.router_name
   region  = var.region
   network = var.network
@@ -25,6 +27,8 @@ resource "google_compute_router" "router" {
 }
 
 resource "google_compute_router_nat" "nat" {
+  count = var.deploy_nat ? 1 : 0
+
   name    = var.nat_name
   router  = google_compute_router.router.name
   region  = var.region
