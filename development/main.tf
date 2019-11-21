@@ -62,6 +62,22 @@ module "us_west1_network" {
   service_ip_cidr_range = "10.201.0.0/16"
 }
 
+# Create service account to use with GKE cluster
+module "gke_service_account" {
+  source = "../modules/service_account"
+
+  name        = "gke-cluster"
+  description = "Service account to use with GKE"
+  project     = google_project.project.project_id
+}
+
+# Allow Cloud Build to deploy to GKE
+resource "google_project_iam_member" "cloudbuild_deploy" {
+  project = google_project.project.project_id
+  role    = "roles/container.developer"
+  member  = "serviceAccount:${google_project.project.number}@cloudbuild.gserviceaccount.com"
+}
+
 # Cluster configuration
 # module "us_west1_cluster" {
 #   # source           = "github.com/raizv/terraform-gke?ref=v0.0.1"
@@ -98,14 +114,6 @@ module "us_west1_network" {
 #   }
 # }
 
-# module "gke_service_account" {
-#   source = "./modules/service_account"
-
-#   name        = "gke-cluster"
-#   description = "Development GKE service account"
-#   project     = google_project.project.project_id
-# }
-
 # # Add dns.admin role to external-dns service account
 # module "external_dns_service_account" {
 #   source = "./modules/service_account"
@@ -121,11 +129,4 @@ module "us_west1_network" {
 #   project = google_project.project.project_id
 #   role    = "roles/iam.workloadIdentityUser"
 #   member  = "serviceAccount:${google_project.project.project_id}.svc.id.goog[kube-system/external-dns]"
-# }
-
-# # Allow Cloud Build to deploy to GKE
-# resource "google_project_iam_member" "cloudbuild_deploy" {
-#   project = google_project.project.project_id
-#   role    = "roles/container.developer"
-#   member  = "serviceAccount:${google_project.project.number}@cloudbuild.gserviceaccount.com"
 # }
