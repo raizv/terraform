@@ -162,7 +162,7 @@ module "postgres" {
     private_network = google_compute_network.vpc.self_link
     authorized_networks = [{
       name  = "gke"
-      value = module.development_us_west1_network.subnetwork.ip_cidr_range
+      value = module.us_west1_network.subnetwork.ip_cidr_range
     }]
   }
 
@@ -175,7 +175,7 @@ module "postgres" {
     private_network = google_compute_network.vpc.self_link
     authorized_networks = [{
       name  = "gke"
-      value = module.development_us_west1_network.subnetwork.ip_cidr_range
+      value = module.us_west1_network.subnetwork.ip_cidr_range
     }]
   }
 }
