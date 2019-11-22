@@ -156,7 +156,7 @@ module "postgres" {
   # available in the generated_user_password output variable.
   # user_password = "default"
 
-  ip_configuration {
+  ip_configuration = {
     ipv4_enabled    = false
     require_ssl     = false
     private_network = google_compute_network.vpc.self_link
@@ -169,7 +169,7 @@ module "postgres" {
   read_replica_size = 0
   read_replica_tier = "db-f1-micro"
 
-  read_replica_ip_configuration {
+  read_replica_ip_configuration = {
     ipv4_enabled    = false
     require_ssl     = false
     private_network = google_compute_network.vpc.self_link
