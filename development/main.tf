@@ -139,7 +139,7 @@ module "postgres" {
   # source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
   # version = "2.0.0"
 
-  source = "../modules/postgres"
+  source = "../modules/postgresql"
 
   name             = "postgres"
   database_version = "POSTGRES_9_6"
