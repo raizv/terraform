@@ -36,7 +36,10 @@ module "project_services" {
     "stackdriver.googleapis.com",
     "cloudbuild.googleapis.com",
     "cloudtrace.googleapis.com",
-    "containeranalysis.googleapis.com"
+    "containeranalysis.googleapis.com",
+    "sqladmin.googleapis.com",
+    "servicenetworking.googleapis.com",
+    "cloudresourcemanager.googleapis.com"
   ]
   disable_services_on_destroy = false
   disable_dependent_services  = false
