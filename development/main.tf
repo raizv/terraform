@@ -156,6 +156,11 @@ module "postgres" {
   # available in the generated_user_password output variable.
   # user_password = "default"
 
+  backup_configuration = {
+    binary_log_enabled = false
+    enabled            = false
+  }
+
   ip_configuration = {
     ipv4_enabled    = false
     require_ssl     = false
