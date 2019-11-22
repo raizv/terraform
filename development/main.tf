@@ -136,8 +136,10 @@ resource "google_project_iam_member" "cloudbuild_deploy" {
 
 module "postgres" {
   # https://registry.terraform.io/modules/GoogleCloudPlatform/sql-db/google/2.0.0/submodules/postgresql
-  source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
-  version = "2.0.0"
+  # source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
+  # version = "2.0.0"
+
+  source = "../modules/postgres"
 
   name             = "postgres"
   database_version = "POSTGRES_9_6"
@@ -156,10 +158,10 @@ module "postgres" {
   # available in the generated_user_password output variable.
   # user_password = "default"
 
-  backup_configuration = {
-    binary_log_enabled = false
-    enabled            = false
-  }
+  # backup_configuration = {
+  #   binary_log_enabled = false
+  #   enabled            = false
+  # }
 
   ip_configuration = {
     ipv4_enabled    = false
