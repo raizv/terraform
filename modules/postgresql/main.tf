@@ -41,14 +41,14 @@ resource "google_sql_database_instance" "default" {
     activation_policy           = var.activation_policy
     availability_type           = var.availability_type
     authorized_gae_applications = var.authorized_gae_applications
-    # dynamic "backup_configuration" {
-    #   for_each = [var.backup_configuration]
-    #   content {
-    #     binary_log_enabled = lookup(backup_configuration.value, "binary_log_enabled", null)
-    #     enabled            = lookup(backup_configuration.value, "enabled", null)
-    #     start_time         = lookup(backup_configuration.value, "start_time", null)
-    #   }
-    # }
+    dynamic "backup_configuration" {
+      for_each = [var.backup_configuration]
+      content {
+        binary_log_enabled = lookup(backup_configuration.value, "binary_log_enabled", null)
+        enabled            = lookup(backup_configuration.value, "enabled", null)
+        start_time         = lookup(backup_configuration.value, "start_time", null)
+      }
+    }
     dynamic "ip_configuration" {
       for_each = [local.ip_configurations[local.ip_configuration_enabled ? "enabled" : "disabled"]]
       content {
