@@ -159,9 +159,9 @@ module "postgres" {
   # user_password = "default"
 
   backup_configuration = {
-    # binary_log_enabled = false
-    enabled    = true
-    start_time = "01:00"
+    binary_log_enabled = false
+    enabled            = true
+    start_time         = "01:00"
   }
 
   ip_configuration = {
