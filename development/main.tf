@@ -136,10 +136,10 @@ resource "google_project_iam_member" "cloudbuild_deploy" {
 
 module "postgres" {
   # https://registry.terraform.io/modules/GoogleCloudPlatform/sql-db/google/2.0.0/submodules/postgresql
-  # source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
-  # version = "2.0.0"
+  source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
+  version = "2.0.0"
 
-  source = "../modules/postgresql"
+  # source = "../modules/postgresql"
 
   name             = "postgres"
   database_version = "POSTGRES_9_6"
