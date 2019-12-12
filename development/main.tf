@@ -27,7 +27,7 @@ resource "google_project" "project" {
 # Activate project APIs
 module "project_services" {
   source  = "terraform-google-modules/project-factory/google//modules/project_services"
-  version = "3.3.0"
+  version = "6.0.0"
 
   project_id = google_project.project.project_id
   activate_apis = [
