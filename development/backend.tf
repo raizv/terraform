@@ -1,8 +1,7 @@
 terraform {
-  required_version = ">=0.12.18"
-
   backend "remote" {
-    organization = "raizv"
+    required_version = ">=0.12.18"
+    organization     = "raizv"
 
     workspaces {
       name = "development"
