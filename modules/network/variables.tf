@@ -7,13 +7,13 @@ variable "pod_ip_cidr_range" {}
 variable "service_ip_cidr_range" {}
 
 variable "subnetwork_name" {
-  default = "subnetwork"
+  default = "default"
 }
 
 variable "router_name" {
-  default = "router"
+  default = "default"
 }
 
 variable "nat_name" {
-  default = "nat"
+  default = "default"
 }
