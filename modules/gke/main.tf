@@ -123,7 +123,7 @@ resource "google_container_node_pool" "pool" {
     disk_size_gb = var.disk_size_gb
 
     # Service account to be used by Node VMs. If not specified, "default" service account is used
-    # service_account = var.service_account
+    service_account = var.service_account
 
     oauth_scopes = [
       "https://www.googleapis.com/auth/compute.readonly",
