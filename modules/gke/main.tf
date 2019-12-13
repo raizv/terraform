@@ -84,9 +84,9 @@ resource "google_container_cluster" "cluster" {
 
   # Allow to link GCP Service Account to Kubernetes Service Account
   # https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
-  # workload_identity_config {
-  #   identity_namespace = "${var.project}.svc.id.goog"
-  # }
+  workload_identity_config {
+    identity_namespace = "${var.project}.svc.id.goog"
+  }
 }
 
 resource "google_container_node_pool" "pool" {
@@ -135,9 +135,9 @@ resource "google_container_node_pool" "pool" {
 
     # Enables workload identity on the node
     # https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
-    # workload_metadata_config {
-    #   node_metadata = "GKE_METADATA_SERVER"
-    # }
+    workload_metadata_config {
+      node_metadata = "GKE_METADATA_SERVER"
+    }
   }
 }
 
