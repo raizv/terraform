@@ -136,7 +136,7 @@ resource "google_container_node_pool" "pool" {
     # Enables workload identity on the node
     # https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
     workload_metadata_config {
-      node_metadata = "UNSPECIFIED"
+      node_metadata = "SECURE"
     }
   }
 }
