@@ -125,6 +125,15 @@ resource "google_container_node_pool" "pool" {
     # Service account to be used by Node VMs. If not specified, "default" service account is used
     # service_account = var.service_account
 
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/compute.readonly",
+      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/trace.append",
+      "https://www.googleapis.com/auth/monitoring",
+      "https://www.googleapis.com/auth/servicecontrol",
+    ]
+
     # gcloud iam service-accounts add-iam-policy-binding 
     #   --role roles/iam.workloadIdentityUser 
     #   --member "serviceAccount:development-bb649fa0.svc.id.goog[greetings/default]"
