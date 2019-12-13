@@ -84,9 +84,9 @@ resource "google_container_cluster" "cluster" {
 
   # Allow to link GCP Service Account to Kubernetes Service Account
   # https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
-  workload_identity_config {
-    identity_namespace = "${var.project}.svc.id.goog"
-  }
+  # workload_identity_config {
+  #   identity_namespace = "${var.project}.svc.id.goog"
+  # }
 }
 
 resource "google_container_node_pool" "pool" {
@@ -123,7 +123,7 @@ resource "google_container_node_pool" "pool" {
     disk_size_gb = var.disk_size_gb
 
     # Service account to be used by Node VMs. If not specified, "default" service account is used
-    service_account = var.service_account
+    # service_account = var.service_account
 
     # gcloud iam service-accounts add-iam-policy-binding 
     #   --role roles/iam.workloadIdentityUser 
@@ -135,9 +135,9 @@ resource "google_container_node_pool" "pool" {
 
     # Enables workload identity on the node
     # https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
-    workload_metadata_config {
-      node_metadata = "SECURE"
-    }
+    # workload_metadata_config {
+    #   node_metadata = "SECURE"
+    # }
   }
 }
 
