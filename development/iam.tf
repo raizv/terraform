@@ -26,3 +26,10 @@ resource "google_project_iam_member" "cloudbuild_deploy" {
 
 #   depends_on = [module.project_services]
 # }
+
+# Allow service account in GKE to use Workload Identity [namespace/serviceAccountName]
+resource "google_project_iam_member" "default_k8s_service_account" {
+  project = google_project.project.project_id
+  role    = "roles/iam.workloadIdentityUser"
+  member  = "serviceAccount:${google_project.project.project_id}.svc.id.goog[clientoutlook/default]"
+}
