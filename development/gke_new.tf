@@ -5,6 +5,7 @@ module "gke_cluster" {
   name                   = "development"
   location               = "us-central1-a"
   master_ipv4_cidr_block = "172.18.0.0/28"
+  release_channel        = "REGULAR"
 
   project                       = google_project.project.project_id
   network                       = google_compute_network.vpc.self_link
@@ -18,13 +19,12 @@ module "gke_cluster" {
 module "gke_node_pool" {
   source = "../modules/gke_node_pool"
 
-  cluster         = module.gke_cluster.name
-  location        = "us-central1-a"
-  machine_type    = "e2-standard-2"
-  min_node_count  = 1
-  max_node_count  = 3
-  preemptible     = true
-  release_channel = "REGULAR"
+  cluster        = module.gke_cluster.name
+  location       = "us-central1-a"
+  machine_type   = "e2-standard-2"
+  min_node_count = 1
+  max_node_count = 3
+  preemptible    = true
 
   project         = google_project.project.project_id
   service_account = module.gke_service_account.email
