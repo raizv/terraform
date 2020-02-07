@@ -22,3 +22,8 @@ variable "release_channel" {
   description = "STABLE, REGULAR or RAPID"
   default     = "STABLE"
 }
+
+variable "enable_pod_security_policy" {
+  description = "Enable Pod Security Policy"
+  default     = true
+}
