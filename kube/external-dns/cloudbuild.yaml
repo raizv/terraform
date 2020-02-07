@@ -1,0 +1,37 @@
+# usage: 
+# deploy to dev: gcloud builds submit
+# deploy to prod: gcloud builds submit --substitutions=_ENVIRONMENT="production",_CLUSTER="production",_LOCATION="us-east1"
+
+substitutions:
+  _CLUSTER: development
+  _ENVIRONMENT: development
+  _LOCATION: northamerica-northeast1
+  _NAMESPACE: kube-system
+
+steps:
+# render helm template
+- id: template
+  name: gcr.io/$PROJECT_ID/helm
+  args:
+  - template 
+  - '.'
+  # save output to "helm-chart" directory
+  - --output-dir=.
+  - --values=${_ENVIRONMENT}.yaml
+  - --set=projectId=$PROJECT_ID
+  - --set=cluster=${_CLUSTER}
+  - --set=location=${_LOCATION}
+
+# deploy to kubernetes cluster from "helm-chart" directory using gke-deploy
+# https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gke-deploy
+- id: deploy
+  name: gcr.io/cloud-builders/gke-deploy
+  args:
+  - run
+  - --filename=helm-chart/templates
+  - --namespace=${_NAMESPACE}
+  - --location=${_LOCATION}
+  - --cluster=${_CLUSTER}
+  - --timeout=3m0s
+  wait_for:
+    - template

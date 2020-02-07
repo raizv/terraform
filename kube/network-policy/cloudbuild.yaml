@@ -1,0 +1,21 @@
+# usage: 
+# deploy to dev: 
+# gcloud builds submit --substitutions=_CLUSTER="development",_LOCATION="northamerica-northeast1",_NAMESPACE="namespace"
+# deploy to prod: 
+# gcloud builds submit --substitutions=_CLUSTER="production",_LOCATION="us-east1",_NAMESPACE="namespace"
+
+substitutions:
+  _CLUSTER: development
+  _LOCATION: northamerica-northeast1
+  _NAMESPACE: default
+
+steps:
+# Create Namespaces and apply network policies
+- id: create-namespaces
+  name: gcr.io/cloud-builders/gke-deploy
+  args:
+  - apply
+  - --cluster=${_CLUSTER}
+  - --location=${_LOCATION}
+  - --namespace=${_NAMESPACE}
+  - --filename=network-policy.yaml

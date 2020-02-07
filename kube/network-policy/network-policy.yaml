@@ -1,0 +1,25 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-from-kube-system-namespace
+spec:
+  # apply to all pods within namespace
+  podSelector: {}
+  ingress:
+  - from:
+    # allow health checks from HTTP(S) LoadBalancer
+    # https://cloud.google.com/load-balancing/docs/health-checks
+    - ipBlock:
+        cidr: 35.191.0.0/16
+    - ipBlock:
+        cidr: 130.211.0.0/22
+    - ipBlock:
+        cidr: 209.85.152.0/22
+    - ipBlock:
+        cidr: 209.85.204.0/22
+    # allow traffic within namespace
+    - podSelector: {}
+    - namespaceSelector:
+        matchLabels:
+          # allow traffic from kube-system namespace
+          namespace: kube-system

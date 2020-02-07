@@ -1,0 +1,11 @@
+# Environment name
+environment: development
+
+# GKE cluster name
+cluster: ''
+
+# GCP ProjectId where GKE cluster is running
+projectId: ''
+
+# Ingress domain
+domain: dev.eunity.cloud

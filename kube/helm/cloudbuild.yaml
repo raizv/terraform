@@ -1,0 +1,11 @@
+# usage: gcloud builds submit
+
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/helm:${_HELM_VERSION}', '--tag=gcr.io/$PROJECT_ID/helm:latest', '--build-arg', 'HELM_VERSION=v${_HELM_VERSION}', '.']
+images:
+  - 'gcr.io/$PROJECT_ID/helm:${_HELM_VERSION}'
+  - 'gcr.io/$PROJECT_ID/helm:latest'
+tags: ['cloud-builders-community']
+substitutions:
+  _HELM_VERSION: 3.0.1

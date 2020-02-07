@@ -1,0 +1,37 @@
+# usage: 
+# deploy to dev: gcloud builds submit --substitutions=_CLUSTER="development"
+# deploy to prod: gcloud builds submit --substitutions=_CLUSTER="production",_LOCATION="us-east1"
+
+substitutions:
+  _CLUSTER: development
+  _LOCATION: northamerica-northeast1
+
+steps:
+# Create Namespaces and apply network policies
+- id: create-namespaces
+  name: gcr.io/cloud-builders/gke-deploy
+  args:
+  - apply
+  - --cluster=${_CLUSTER}
+  - --location=${_LOCATION}
+  - --filename=namespaces
+
+# Apply RBAC
+- id: apply-rbac
+  name: gcr.io/cloud-builders/gke-deploy
+  args:
+  - apply
+  - --cluster=${_CLUSTER}
+  - --location=${_LOCATION}
+  - --namespace=kube-system
+  - --filename=rbac
+
+# Apply Pod Security Policies
+- id: apply-psp
+  name: gcr.io/cloud-builders/gke-deploy
+  args:
+  - apply
+  - --cluster=${_CLUSTER}
+  - --location=${_LOCATION}
+  - --namespace=kube-system
+  - --filename=psp
