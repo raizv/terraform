@@ -19,6 +19,9 @@ module "gke_cluster" {
   master_ipv4_cidr_block     = "172.18.0.0/28"
   release_channel            = "REGULAR"
   enable_pod_security_policy = false
+  enable_network_policy      = false
+  disable_network_policy     = true
+
   # TODO: add psp_enabled = false
 
   project                       = google_project.project.project_id

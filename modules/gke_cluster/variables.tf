@@ -27,3 +27,13 @@ variable "enable_pod_security_policy" {
   description = "Enable Pod Security Policy"
   default     = true
 }
+
+variable "enable_network_policy" {
+  description = "Enable Network Policy"
+  default     = true
+}
+
+variable "disable_network_policy" {
+  description = "Enable Network Policy"
+  default     = false
+}

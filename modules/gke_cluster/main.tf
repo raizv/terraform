@@ -36,7 +36,7 @@ resource "google_container_cluster" "cluster" {
   network_policy {
     # In GKE this also enables the ip masquerade agent
     # https://cloud.google.com/kubernetes-engine/docs/how-to/ip-masquerade-agent
-    enabled  = true
+    enabled  = var.enable_network_policy
     provider = "CALICO"
   }
 
@@ -54,7 +54,7 @@ resource "google_container_cluster" "cluster" {
     }
     # enable network policy
     network_policy_config {
-      disabled = false
+      disabled = var.disable_network_policy
     }
   }
 
