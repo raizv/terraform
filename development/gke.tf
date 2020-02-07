@@ -1,14 +1,15 @@
-# module "network_us_central1" {
-#   source = "../modules/network"
+module "network_us_central1" {
+  source = "../modules/network"
 
-#   project = google_project.project.project_id
-#   network = google_compute_network.vpc.self_link
-#   region  = "us-central1"
+  region = "us-central1"
 
-#   ip_cidr_range         = "10.1.0.0/16"
-#   pod_ip_cidr_range     = "10.101.0.0/16" # cluster_secondary_range_name in gke.tf
-#   service_ip_cidr_range = "10.201.0.0/16" # services_secondary_range_name in gke.tf
-# }
+  ip_cidr_range         = "10.1.0.0/16"
+  pod_ip_cidr_range     = "10.101.0.0/16" # cluster_secondary_range_name in gke.tf
+  service_ip_cidr_range = "10.201.0.0/16" # services_secondary_range_name in gke.tf
+
+  project = google_project.project.project_id
+  network = google_compute_network.vpc.self_link
+}
 
 # module "gke_cluster" {
 #   source = "../modules/gke_cluster"

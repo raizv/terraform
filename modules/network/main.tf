@@ -1,5 +1,5 @@
 resource "google_compute_subnetwork" "subnetwork" {
-  name                     = var.subnetwork_name
+  name                     = var.region
   ip_cidr_range            = var.ip_cidr_range
   region                   = var.region
   network                  = var.network
@@ -18,14 +18,14 @@ resource "google_compute_subnetwork" "subnetwork" {
 }
 
 resource "google_compute_router" "router" {
-  name    = var.router_name
+  name    = var.region
   region  = var.region
   network = var.network
   project = var.project
 }
 
 resource "google_compute_router_nat" "nat" {
-  name    = var.nat_name
+  name    = var.region
   router  = google_compute_router.router.name
   region  = var.region
   project = var.project
