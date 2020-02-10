@@ -24,12 +24,12 @@ module "gke_cluster" {
 
   # TODO: add psp_enabled = false
 
-  project                       = google_project.project.project_id
-  network                       = google_compute_network.vpc.self_link
-  subnetwork                    = module.network_us_central1.subnetwork.self_link
-  cluster_secondary_range_name  = module.network_us_central1.subnetwork.secondary_ip_range.0.range_name
-  services_secondary_range_name = module.network_us_central1.subnetwork.secondary_ip_range.1.range_name
-  org_domain                    = var.org_domain
+  project    = google_project.project.project_id
+  network    = google_compute_network.vpc.self_link
+  subnetwork = module.network_us_central1.subnetwork.self_link
+  # cluster_secondary_range_name  = module.network_us_central1.subnetwork.secondary_ip_range.0.range_name
+  # services_secondary_range_name = module.network_us_central1.subnetwork.secondary_ip_range.1.range_name
+  org_domain = var.org_domain
 }
 
 module "gke_node_pool" {
