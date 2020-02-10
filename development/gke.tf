@@ -46,24 +46,31 @@ module "network_us_central1" {
 #   service_account = module.gke_service_account.email
 # }
 
-resource "google_container_cluster" "cluster" {
-  provider   = google-beta
-  name       = "cluster"
-  location   = "us-central1-a"
-  network    = google_compute_network.vpc.self_link
-  subnetwork = module.network_us_central1.subnetwork.self_link
-  project    = google_project.project.project_id
+resource "google_container_cluster" "primary" {
+  name     = "my-gke-cluster"
+  location = "us-central1-a"
 
-  # remove_default_node_pool = true
-  initial_node_count = 1
+  # We can't create a cluster with no node pool defined, but we want to only use
+  # separately managed node pools. So we create the smallest possible default
+  # node pool and immediately delete it.
+  remove_default_node_pool = true
+  initial_node_count       = 1
 
   master_auth {
     username = ""
     password = ""
+
     client_certificate_config {
       issue_client_certificate = false
     }
   }
+}
+
+resource "google_container_node_pool" "primary_preemptible_nodes" {
+  name       = "my-node-pool"
+  location   = "us-central1-a"
+  cluster    = google_container_cluster.primary.name
+  node_count = 1
 
   node_config {
     preemptible  = true
