@@ -4,8 +4,8 @@ module "network_us_central1" {
   region = "us-central1"
 
   ip_cidr_range = "10.1.0.0/16"
-  # pod_ip_cidr_range     = "10.4.0.0/14" # Pod address range 
-  # service_ip_cidr_range = "10.70.0.0/20" # Service address range	
+  # pod_ip_cidr_range     = "10.4.0.0/14" # Pod address range
+  # service_ip_cidr_range = "10.70.0.0/20" # Service address range
 
   project = google_project.project.project_id
   network = google_compute_network.vpc.self_link

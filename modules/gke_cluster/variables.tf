@@ -4,8 +4,8 @@ variable "network" {}
 variable "subnetwork" {}
 variable "project" {}
 variable "org_domain" {}
-variable "cluster_secondary_range_name" {}
-variable "services_secondary_range_name" {}
+# variable "cluster_secondary_range_name" {}
+# variable "services_secondary_range_name" {}
 
 # you cannot use master, node, Pod, or Service IP range that overlaps with 172.17.0.0/16
 variable "master_ipv4_cidr_block" {
