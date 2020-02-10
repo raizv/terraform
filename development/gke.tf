@@ -47,9 +47,11 @@ module "network_us_central1" {
 # }
 
 resource "google_container_cluster" "primary" {
-  name     = "my-gke-cluster"
-  location = "us-central1-a"
-  project  = google_project.project.project_id
+  name       = "my-gke-cluster"
+  location   = "us-central1-a"
+  project    = google_project.project.project_id
+  network    = google_compute_network.vpc.self_link
+  subnetwork = module.network_us_central1.subnetwork.self_link
 
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
