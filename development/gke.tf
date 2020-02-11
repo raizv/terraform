@@ -32,41 +32,41 @@ module "network_us_central1" {
 #   org_domain = var.org_domain
 # }
 
-# resource "google_container_cluster" "primary" {
-#   provider   = google-beta
-#   name       = "my-gke-cluster"
-#   location   = "us-central1-a"
-#   project    = google_project.project.project_id
-#   network    = google_compute_network.vpc.self_link
-#   subnetwork = module.network_us_central1.subnetwork.self_link
+resource "google_container_cluster" "primary" {
+  provider   = google-beta
+  name       = "primary"
+  location   = "us-central1-a"
+  project    = google_project.project.project_id
+  network    = google_compute_network.vpc.self_link
+  subnetwork = module.network_us_central1.subnetwork.self_link
 
-#   remove_default_node_pool = true
-#   initial_node_count       = 1
+  remove_default_node_pool = true
+  initial_node_count       = 1
 
-#   master_auth {
-#     username = ""
-#     password = ""
+  master_auth {
+    username = ""
+    password = ""
 
-#     client_certificate_config {
-#       issue_client_certificate = false
-#     }
-#   }
-#   workload_identity_config {
-#     identity_namespace = "${google_project.project.project_id}.svc.id.goog"
-#   }
-# }
+    client_certificate_config {
+      issue_client_certificate = false
+    }
+  }
+  workload_identity_config {
+    identity_namespace = "${google_project.project.project_id}.svc.id.goog"
+  }
+}
 
-# module "gke_node_pool" {
-#   source = "../modules/gke_node_pool"
+module "gke_node_pool" {
+  source = "../modules/gke_node_pool"
 
-#   # cluster        = module.gke_cluster.name
-#   cluster        = google_container_cluster.primary.name
-#   location       = "us-central1-a"
-#   machine_type   = "e2-standard-2"
-#   min_node_count = 1
-#   max_node_count = 3
-#   preemptible    = true
+  # cluster        = module.gke_cluster.name
+  cluster        = google_container_cluster.primary.name
+  location       = "us-central1-a"
+  machine_type   = "e2-standard-2"
+  min_node_count = 1
+  max_node_count = 3
+  preemptible    = true
 
-#   project         = google_project.project.project_id
-#   service_account = module.gke_service_account.email
-# }
+  project         = google_project.project.project_id
+  service_account = module.gke_service_account.email
+}
