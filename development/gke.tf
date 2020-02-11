@@ -59,7 +59,7 @@ module "gke_node_pool" {
   source = "../modules/gke_node_pool"
 
   # cluster        = module.gke_cluster.name
-  cluster        = google_container_cluster.primary
+  cluster        = google_container_cluster.primary.name
   location       = "us-central1-a"
   machine_type   = "e2-standard-2"
   min_node_count = 1
