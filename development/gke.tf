@@ -32,20 +32,6 @@ module "network_us_central1" {
 #   org_domain = var.org_domain
 # }
 
-# module "gke_node_pool" {
-#   source = "../modules/gke_node_pool"
-
-#   cluster        = module.gke_cluster.name
-#   location       = "us-central1-a"
-#   machine_type   = "e2-standard-2"
-#   min_node_count = 1
-#   max_node_count = 3
-#   preemptible    = true
-
-#   project         = google_project.project.project_id
-#   service_account = module.gke_service_account.email
-# }
-
 resource "google_container_cluster" "primary" {
   name       = "my-gke-cluster"
   location   = "us-central1-a"
@@ -67,6 +53,21 @@ resource "google_container_cluster" "primary" {
       issue_client_certificate = false
     }
   }
+}
+
+module "gke_node_pool" {
+  source = "../modules/gke_node_pool"
+
+  # cluster        = module.gke_cluster.name
+  cluster        = google_container_cluster.primary
+  location       = "us-central1-a"
+  machine_type   = "e2-standard-2"
+  min_node_count = 1
+  max_node_count = 3
+  preemptible    = true
+
+  project         = google_project.project.project_id
+  service_account = module.gke_service_account.email
 }
 
 resource "google_container_node_pool" "primary_preemptible_nodes" {
