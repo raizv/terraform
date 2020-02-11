@@ -54,6 +54,19 @@ resource "google_container_cluster" "primary" {
   workload_identity_config {
     identity_namespace = "${google_project.project.project_id}.svc.id.goog"
   }
+
+  # Private cluster configuration
+  private_cluster_config {
+    enable_private_endpoint = false
+    enable_private_nodes    = true
+    master_ipv4_cidr_block  = "172.20.0.0/28"
+  }
+
+  # VPC-native cluster configuration
+  ip_allocation_policy {
+    cluster_secondary_range_name  = module.network_us_central1.subnetwork.secondary_ip_range.0.range_name
+    services_secondary_range_name = module.network_us_central1.subnetwork.secondary_ip_range.1.range_name
+  }
 }
 
 module "gke_node_pool" {
