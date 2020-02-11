@@ -33,6 +33,7 @@ module "network_us_central1" {
 # }
 
 resource "google_container_cluster" "primary" {
+  provider   = google-beta
   name       = "my-gke-cluster"
   location   = "us-central1-a"
   project    = google_project.project.project_id
