@@ -7,14 +7,14 @@ resource "google_compute_subnetwork" "subnetwork" {
   private_ip_google_access = true
 
   # you cannot use master, node, Pod, or Service IP range that overlaps with 172.17.0.0/16
-  # secondary_ip_range {
-  #   range_name    = "pod-secondary"
-  #   ip_cidr_range = var.pod_ip_cidr_range
-  # }
-  # secondary_ip_range {
-  #   range_name    = "service-secondary"
-  #   ip_cidr_range = var.service_ip_cidr_range
-  # }
+  secondary_ip_range {
+    range_name    = "pod-secondary"
+    ip_cidr_range = var.pod_ip_cidr_range
+  }
+  secondary_ip_range {
+    range_name    = "service-secondary"
+    ip_cidr_range = var.service_ip_cidr_range
+  }
 }
 
 resource "google_compute_router" "router" {
