@@ -53,6 +53,9 @@ resource "google_container_cluster" "primary" {
       issue_client_certificate = false
     }
   }
+  workload_identity_config {
+    identity_namespace = "${google_project.project.project_id}.svc.id.goog"
+  }
 }
 
 module "gke_node_pool" {
