@@ -27,12 +27,10 @@ resource "google_container_cluster" "cluster" {
   }
 
   # VPC-native cluster configuration
-  ip_allocation_policy {
-    # cluster_secondary_range_name  = var.cluster_secondary_range_name
-    # services_secondary_range_name = var.services_secondary_range_name
-    cluster_ipv4_cidr_block  = "/14"
-    services_ipv4_cidr_block = "/20"
-  }
+  # ip_allocation_policy {
+  #   cluster_secondary_range_name  = var.cluster_secondary_range_name
+  #   services_secondary_range_name = var.services_secondary_range_name
+  # }
 
   logging_service    = "logging.googleapis.com/kubernetes"
   monitoring_service = "monitoring.googleapis.com/kubernetes"
@@ -47,17 +45,17 @@ resource "google_container_cluster" "cluster" {
       disabled = false
     }
     # enable network policy
-    # network_policy_config {
-    #   disabled = var.disable_network_policy
-    # }
+    network_policy_config {
+      disabled = var.disable_network_policy
+    }
   }
 
-  # network_policy {
-  #   # In GKE this also enables the ip masquerade agent
-  #   # https://cloud.google.com/kubernetes-engine/docs/how-to/ip-masquerade-agent
-  #   enabled  = var.enable_network_policy
-  #   provider = "CALICO"
-  # }
+  network_policy {
+    # In GKE this also enables the ip masquerade agent
+    # https://cloud.google.com/kubernetes-engine/docs/how-to/ip-masquerade-agent
+    enabled  = var.enable_network_policy
+    provider = "CALICO"
+  }
 
   maintenance_policy {
     daily_maintenance_window {
