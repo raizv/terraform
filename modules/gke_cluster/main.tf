@@ -20,13 +20,13 @@ resource "google_container_cluster" "cluster" {
   }
 
   # Private cluster configuration
-  private_cluster_config {
-    enable_private_endpoint = false
-    enable_private_nodes    = true
-    master_ipv4_cidr_block  = var.master_ipv4_cidr_block
-  }
+  # private_cluster_config {
+  #   enable_private_endpoint = false
+  #   enable_private_nodes    = true
+  #   master_ipv4_cidr_block  = var.master_ipv4_cidr_block
+  # }
 
-  # VPC-native cluster configuration
+  # # VPC-native cluster configuration
   # ip_allocation_policy {
   #   cluster_secondary_range_name  = var.cluster_secondary_range_name
   #   services_secondary_range_name = var.services_secondary_range_name

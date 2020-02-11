@@ -14,9 +14,9 @@ module "network_us_central1" {
 module "gke_cluster" {
   source = "../modules/gke_cluster"
 
-  name                       = "development"
-  location                   = "us-central1-a"
-  master_ipv4_cidr_block     = "172.18.0.0/28"
+  name     = "development"
+  location = "us-central1-a"
+  # master_ipv4_cidr_block     = "172.18.0.0/28"
   release_channel            = "REGULAR"
   enable_pod_security_policy = false
   enable_network_policy      = false
