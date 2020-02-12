@@ -20,16 +20,24 @@ resource "google_container_cluster" "cluster" {
   }
 
   # Private cluster configuration
-  private_cluster_config {
-    enable_private_endpoint = false
-    enable_private_nodes    = true
-    master_ipv4_cidr_block  = var.master_ipv4_cidr_block
-  }
+  # private_cluster_config {
+  #   enable_private_endpoint = false
+  #   enable_private_nodes    = true
+  #   master_ipv4_cidr_block  = var.master_ipv4_cidr_block
+  # }
 
   # VPC-native cluster configuration
   ip_allocation_policy {
     cluster_secondary_range_name  = var.cluster_secondary_range_name
     services_secondary_range_name = var.services_secondary_range_name
+  }
+
+  # Network Policy configuration
+  network_policy {
+    # In GKE this also enables the ip masquerade agent
+    # https://cloud.google.com/kubernetes-engine/docs/how-to/ip-masquerade-agent
+    enabled  = true
+    provider = "CALICO"
   }
 
   logging_service    = "logging.googleapis.com/kubernetes"
@@ -46,15 +54,8 @@ resource "google_container_cluster" "cluster" {
     }
     # enable network policy
     network_policy_config {
-      disabled = var.disable_network_policy
+      disabled = false
     }
-  }
-
-  network_policy {
-    # In GKE this also enables the ip masquerade agent
-    # https://cloud.google.com/kubernetes-engine/docs/how-to/ip-masquerade-agent
-    enabled  = var.enable_network_policy
-    provider = "CALICO"
   }
 
   maintenance_policy {
@@ -65,7 +66,7 @@ resource "google_container_cluster" "cluster" {
 
   # https://cloud.google.com/kubernetes-engine/docs/concepts/release-channels
   release_channel {
-    channel = var.release_channel
+    channel = "STABLE"
   }
 
   # Allow to grant RBAC roles to the members of G Suite group
@@ -78,7 +79,7 @@ resource "google_container_cluster" "cluster" {
   # https://cloud.google.com/kubernetes-engine/docs/how-to/pod-security-policies
   # https://kubernetes.io/docs/concepts/policy/pod-security-policy/
   pod_security_policy_config {
-    enabled = var.enable_pod_security_policy
+    enabled = true
   }
 
   # Allow to link GCP Service Account to Kubernetes Service Account
