@@ -17,3 +17,8 @@ variable "maintenance_start_time" {
   description = "Time window specified for daily maintenance operations. Specify start_time in RFC3339 format HH:MM"
   default     = "01:00"
 }
+
+variable "psp" {
+  description = "Enable pod security policy"
+  default     = true
+}

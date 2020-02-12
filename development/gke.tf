@@ -16,6 +16,7 @@ module "gke_cluster" {
 
   name     = "development"
   location = "us-central1-a"
+  psp      = false
 
   org_domain                    = var.org_domain
   project                       = google_project.project.project_id

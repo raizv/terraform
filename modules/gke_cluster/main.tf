@@ -79,7 +79,7 @@ resource "google_container_cluster" "cluster" {
   # https://cloud.google.com/kubernetes-engine/docs/how-to/pod-security-policies
   # https://kubernetes.io/docs/concepts/policy/pod-security-policy/
   pod_security_policy_config {
-    enabled = true
+    enabled = var.psp
   }
 
   # Allow to link GCP Service Account to Kubernetes Service Account
