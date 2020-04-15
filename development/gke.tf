@@ -1,70 +1,53 @@
-# module "network_us_central1" {
-#   source = "../modules/network"
+locals {
+  usc1a_cluster = {
+    name                   = "usc1a"
+    region                 = "us-central1"
+    zone                   = "us-central1-a"
+    master_ipv4_cidr_block = module.master_ranges.network_cidr_blocks["usc1a"]
+  }
+}
 
-#   region = "us-central1"
+module "usc1a_network" {
+  source = "../modules/network"
 
-#   ip_cidr_range         = "10.0.1.0/24"
-#   pod_ip_cidr_range     = "172.20.0.0/16"
-#   service_ip_cidr_range = "10.96.0.0/12"
+  name   = local.usc1a_cluster.name
+  region = local.usc1a_cluster.region
 
-#   project = google_project.project.project_id
-#   network = google_compute_network.vpc.self_link
-# }
+  ip_cidr_range         = module.network_ranges.network_cidr_blocks["${local.usc1a_cluster.name}"]
+  pod_ip_cidr_range     = module.network_ranges.network_cidr_blocks["${local.usc1a_cluster.name}-pods"]
+  service_ip_cidr_range = module.network_ranges.network_cidr_blocks["${local.usc1a_cluster.name}-services"]
 
-# module "gke_cluster" {
+  project = data.google_project.project.project_id
+  network = google_compute_network.vpc.self_link
+}
+
+
+# module "usc1a_gke_cluster" {
 #   source = "../modules/gke_cluster"
 
-#   name     = "development"
-#   location = "us-central1-a"
-#   psp      = false
+#   name                   = local.usc1a_cluster.name
+#   location               = local.usc1a_cluster.zone
+#   master_ipv4_cidr_block = local.usc1a_cluster.master_ipv4_cidr_block
 
-#   org_domain                    = var.org_domain
-#   project                       = google_project.project.project_id
 #   network                       = google_compute_network.vpc.self_link
-#   subnetwork                    = module.network_us_central1.subnetwork.self_link
-#   cluster_secondary_range_name  = module.network_us_central1.subnetwork.secondary_ip_range.0.range_name
-#   services_secondary_range_name = module.network_us_central1.subnetwork.secondary_ip_range.1.range_name
+#   subnetwork                    = module.usc1a_network.subnetwork.self_link
+#   cluster_secondary_range_name  = module.usc1a_network.subnetwork.secondary_ip_range.0.range_name
+#   services_secondary_range_name = module.usc1a_network.subnetwork.secondary_ip_range.1.range_name
+
+#   org_domain = var.org_domain
+#   project    = data.google_project.project.project_id
 # }
 
-# module "gke_node_pool" {
+# module "usc1a_gke_node_pool" {
 #   source = "../modules/gke_node_pool"
 
-#   cluster        = module.gke_cluster.name
-#   location       = "us-central1-a"
-#   machine_type   = "e2-standard-2"
+#   cluster        = local.usc1a_cluster.name
+#   location       = local.usc1a_cluster.zone
+#   machine_type   = "n1-standard-4"
 #   min_node_count = 1
-#   max_node_count = 3
+#   max_node_count = 10
 #   preemptible    = true
 
-#   project         = google_project.project.project_id
-#   service_account = module.gke_service_account.email
-# }
-
-# module "gke_cluster_new" {
-#   source = "../modules/gke_cluster"
-
-#   name     = "development-new"
-#   location = "us-central1-a"
-#   psp      = false
-
-#   org_domain                    = var.org_domain
-#   project                       = google_project.project.project_id
-#   network                       = google_compute_network.vpc.self_link
-#   subnetwork                    = module.network_us_central1.subnetwork.self_link
-#   cluster_secondary_range_name  = module.network_us_central1.subnetwork.secondary_ip_range.0.range_name
-#   services_secondary_range_name = module.network_us_central1.subnetwork.secondary_ip_range.1.range_name
-# }
-
-# module "gke_node_pool_new" {
-#   source = "../modules/gke_node_pool"
-
-#   cluster        = module.gke_cluster_new.name
-#   location       = "us-central1-a"
-#   machine_type   = "e2-standard-2"
-#   min_node_count = 1
-#   max_node_count = 3
-#   preemptible    = true
-
-#   project         = google_project.project.project_id
-#   service_account = module.gke_service_account.email
+#   project         = data.google_project.project.project_id
+#   service_account = module.usc1a_service_account.email
 # }
