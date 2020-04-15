@@ -17,7 +17,7 @@ module "usc1a_network" {
   pod_ip_cidr_range     = module.network_ranges.network_cidr_blocks["${local.usc1a_cluster.name}-pods"]
   service_ip_cidr_range = module.network_ranges.network_cidr_blocks["${local.usc1a_cluster.name}-services"]
 
-  project = data.google_project.project.project_id
+  project = google_project.project.project_id
   network = google_compute_network.vpc.self_link
 }
 
@@ -35,7 +35,7 @@ module "usc1a_network" {
 #   services_secondary_range_name = module.usc1a_network.subnetwork.secondary_ip_range.1.range_name
 
 #   org_domain = var.org_domain
-#   project    = data.google_project.project.project_id
+#   project    = google_project.project.project_id
 # }
 
 # module "usc1a_gke_node_pool" {
@@ -48,6 +48,6 @@ module "usc1a_network" {
 #   max_node_count = 10
 #   preemptible    = true
 
-#   project         = data.google_project.project.project_id
+#   project         = google_project.project.project_id
 #   service_account = module.usc1a_service_account.email
 # }
