@@ -26,7 +26,7 @@ variable "min_node_count" {
 
 variable "max_node_count" {
   description = "Maximum number of instances in a node pool"
-  default     = 6
+  default     = 10
 }
 
 variable "auto_repair" {

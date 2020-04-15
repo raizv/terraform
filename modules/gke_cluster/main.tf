@@ -20,11 +20,11 @@ resource "google_container_cluster" "cluster" {
   }
 
   # Private cluster configuration
-  # private_cluster_config {
-  #   enable_private_endpoint = false
-  #   enable_private_nodes    = true
-  #   master_ipv4_cidr_block  = var.master_ipv4_cidr_block
-  # }
+  private_cluster_config {
+    enable_private_endpoint = false
+    enable_private_nodes    = true
+    master_ipv4_cidr_block  = var.master_ipv4_cidr_block
+  }
 
   # VPC-native cluster configuration
   ip_allocation_policy {
@@ -34,7 +34,6 @@ resource "google_container_cluster" "cluster" {
 
   # Network Policy configuration
   network_policy {
-    # In GKE this also enables the ip masquerade agent
     # https://cloud.google.com/kubernetes-engine/docs/how-to/ip-masquerade-agent
     enabled  = true
     provider = "CALICO"
@@ -52,6 +51,7 @@ resource "google_container_cluster" "cluster" {
     http_load_balancing {
       disabled = false
     }
+
     # enable network policy
     network_policy_config {
       disabled = false
@@ -60,7 +60,7 @@ resource "google_container_cluster" "cluster" {
 
   maintenance_policy {
     daily_maintenance_window {
-      start_time = var.maintenance_start_time
+      start_time = "01:00"
     }
   }
 
@@ -79,7 +79,7 @@ resource "google_container_cluster" "cluster" {
   # https://cloud.google.com/kubernetes-engine/docs/how-to/pod-security-policies
   # https://kubernetes.io/docs/concepts/policy/pod-security-policy/
   pod_security_policy_config {
-    enabled = var.psp
+    enabled = true
   }
 
   # Allow to link GCP Service Account to Kubernetes Service Account
