@@ -1,4 +1,3 @@
-# Create Eunity folder
 resource "google_folder" "vaas" {
   display_name = "vaas"
   parent       = "organizations/${var.org_id}"
