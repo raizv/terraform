@@ -29,11 +29,11 @@ module "external_dns_service_account" {
   ]
 }
 
-resource "google_project_iam_member" "external_dns_identity_user" {
-  project = google_project.project.project_id
-  role    = "roles/iam.workloadIdentityUser"
-  member  = "serviceAccount:${google_project.project.project_id}.svc.id.goog[kube-system/external-dns]"
-}
+# resource "google_project_iam_member" "external_dns_identity_user" {
+#   project = google_project.project.project_id
+#   role    = "roles/iam.workloadIdentityUser"
+#   member  = "serviceAccount:${google_project.project.project_id}.svc.id.goog[kube-system/external-dns]"
+# }
 
 resource "google_project_iam_member" "cloudbuild_gke_deploy" {
   project = google_project.project.project_id
