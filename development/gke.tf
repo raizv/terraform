@@ -3,9 +3,9 @@
 
 #   region = "us-central1"
 
-#   ip_cidr_range         = "10.1.0.0/16"   # 10.0.1.0/24
-#   pod_ip_cidr_range     = "10.101.0.0/16" # 172.20.0.0/16
-#   service_ip_cidr_range = "10.201.0.0/16" # 10.96.0.0/12
+#   ip_cidr_range         = "10.0.1.0/24"
+#   pod_ip_cidr_range     = "172.20.0.0/16"
+#   service_ip_cidr_range = "10.96.0.0/12"
 
 #   project = google_project.project.project_id
 #   network = google_compute_network.vpc.self_link
