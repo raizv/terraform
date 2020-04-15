@@ -17,8 +17,8 @@ resource "random_id" "project_suffix" {
 
 # Create project
 resource "google_project" "project" {
-  name                = "Development"
-  project_id          = "development-${random_id.project_suffix.hex}"
+  name                = var.environment
+  project_id          = "${var.environment}-${random_id.project_suffix.hex}"
   folder_id           = data.terraform_remote_state.global.outputs.vaas_folder_id
   billing_account     = var.billing_account_id
   auto_create_network = false

@@ -1,3 +1,8 @@
+variable "environment" {
+  description = "Environment name"
+  default     = "development"
+}
+
 variable "org_domain" {
   description = "GCP Organization domain"
   default     = "raizv.ca"
