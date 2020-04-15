@@ -35,8 +35,8 @@ module "external_dns_service_account" {
 #   member  = "serviceAccount:${google_project.project.project_id}.svc.id.goog[kube-system/external-dns]"
 # }
 
-resource "google_project_iam_member" "cloudbuild_gke_deploy" {
-  project = google_project.project.project_id
-  role    = "roles/container.admin"
-  member  = "serviceAccount:${google_project.project.number}@cloudbuild.gserviceaccount.com"
-}
+# resource "google_project_iam_member" "cloudbuild_gke_deploy" {
+#   project = google_project.project.project_id
+#   role    = "roles/container.admin"
+#   member  = "serviceAccount:${google_project.project.number}@cloudbuild.gserviceaccount.com"
+# }
