@@ -7,19 +7,19 @@ locals {
   }
 }
 
-module "usc1a_network" {
-  source = "../modules/network"
+# module "usc1a_network" {
+#   source = "../modules/network"
 
-  name   = local.usc1a_cluster.name
-  region = local.usc1a_cluster.region
+#   name   = local.usc1a_cluster.name
+#   region = local.usc1a_cluster.region
 
-  ip_cidr_range         = module.network_ranges.network_cidr_blocks["${local.usc1a_cluster.name}"]
-  pod_ip_cidr_range     = module.network_ranges.network_cidr_blocks["${local.usc1a_cluster.name}-pods"]
-  service_ip_cidr_range = module.network_ranges.network_cidr_blocks["${local.usc1a_cluster.name}-services"]
+#   ip_cidr_range         = module.network_ranges.network_cidr_blocks["${local.usc1a_cluster.name}"]
+#   pod_ip_cidr_range     = module.network_ranges.network_cidr_blocks["${local.usc1a_cluster.name}-pods"]
+#   service_ip_cidr_range = module.network_ranges.network_cidr_blocks["${local.usc1a_cluster.name}-services"]
 
-  project = google_project.project.project_id
-  network = google_compute_network.vpc.self_link
-}
+#   project = google_project.project.project_id
+#   network = google_compute_network.vpc.self_link
+# }
 
 
 # module "usc1a_gke_cluster" {
