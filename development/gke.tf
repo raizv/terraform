@@ -50,7 +50,6 @@ resource "google_container_cluster" "usc1a" {
   monitoring_service = "monitoring.googleapis.com/kubernetes"
 
   addons_config {
-    # enable HPA
     horizontal_pod_autoscaling {
       disabled = false
     }
@@ -66,7 +65,6 @@ resource "google_container_cluster" "usc1a" {
     }
   }
 
-  # https://cloud.google.com/kubernetes-engine/docs/concepts/release-channels
   release_channel {
     channel = "STABLE"
   }
@@ -127,14 +125,12 @@ resource "google_container_node_pool" "usc1a" {
       "https://www.googleapis.com/auth/cloud-platform",
     ]
 
-    # Enables workload identity on the node
     # https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
     workload_metadata_config {
       node_metadata = "GKE_METADATA_SERVER"
     }
   }
 
-  # Create new node pool before destroy old one
   lifecycle {
     create_before_destroy = true
   }
