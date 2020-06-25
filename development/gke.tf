@@ -90,11 +90,10 @@ resource "google_container_cluster" "usc1a" {
 }
 
 resource "google_container_node_pool" "usc1a" {
-  provider        = google-beta
-  project         = google_project.project.project_id
-  location        = local.usc1a_cluster.zone
-  cluster         = google_container_cluster.usc1a.name
-  service_account = module.usc1a_service_account.email
+  provider = google-beta
+  project  = google_project.project.project_id
+  location = local.usc1a_cluster.zone
+  cluster  = google_container_cluster.usc1a.name
 
   initial_node_count = 1
   autoscaling {
@@ -124,6 +123,8 @@ resource "google_container_node_pool" "usc1a" {
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform",
     ]
+
+    service_account = module.usc1a_service_account.email
 
     # https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
     workload_metadata_config {
