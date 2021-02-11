@@ -29,10 +29,14 @@ module "external_dns_service_account" {
   ]
 }
 
-resource "google_project_iam_member" "external_dns_identity_user" {
-  project = google_project.project.project_id
-  role    = "roles/iam.workloadIdentityUser"
-  member  = "serviceAccount:${google_project.project.project_id}.svc.id.goog[kube-system/external-dns]"
+module "external_dns_workload_identity" {
+  source  = "terraform-google-modules/kubernetes-engine/google//modules/workload-identity"
+  version = "13.0.0"
+
+  use_existing_k8s_sa = true
+  name                = "external-dns"
+  namespace           = "kube-system"
+  project_id          = google_project.project.project_id
 }
 
 resource "google_project_iam_member" "cloudbuild_gke_deploy" {
